@@ -1,0 +1,97 @@
+/* <div class="floor isometric">
+      <div class="sheet"></div>
+ </div> */
+
+body {
+    background-color: #ededed;
+  }
+  
+  .isometric {
+    -webkit-transform: rotateX(60deg) rotateY(0deg) rotateZ(45deg)
+      translate(-38%, 38%) scale3d(1, 1, 1);
+    -moz-transform: rotateX(60deg) rotateY(0deg) rotateZ(45deg)
+      translate(-38%, 38%) scale3d(1, 1, 1);
+    -ms-transform: rotateX(60deg) rotateY(0deg) rotateZ(45deg)
+      translate(-38%, 38%) scale3d(1, 1, 1);
+    -o-transform: rotateX(60deg) rotateY(0deg) rotateZ(45deg) translate(-38%, 38%)
+      scale3d(1, 1, 1);
+    transform: rotateX(60deg) rotateY(0deg) rotateZ(45deg) translate(-38%, 38%)
+      scale3d(1, 1, 1);
+  }
+  
+  .sheet {
+    width: 100px;
+    height: 100px;
+    border-radius: 2px;
+    background-image: url("https://cdn5.vectorstock.com/i/1000x1000/18/69/blue-qr-code-scanning-icon-or-design-logo-vector-18861869.jpg");
+    background-position: center center;
+    background-size: cover;
+    /* background: #00cafe; */
+    border-bottom: 2px solid #007998;
+    border-right: 2px solid #007998;
+    -webkit-animation: lift 1.5s ease-in-out alternate infinite;
+    -moz-animation: lift 1.5s ease-in-out alternate infinite;
+    animation: lift 1.5s ease-in-out alternate infinite;
+    overflow: hidden;
+  }
+  
+  .floor {
+    width: auto;
+    height: auto;
+    border-radius: 2px;
+    background: #fefefe;
+    border-bottom: 2px solid #cbcbcb;
+    border-right: 2px solid #cbcbcb;
+    padding: 50px;
+    position: absolute;
+    left: 50%;
+    top: 10%;
+  }
+  
+  @-webkit-keyframes lift {
+    20%,
+    from {
+      -webkit-transform: translate(0, 0);
+      box-shadow: -1px 2px 2px -2px rgba(0, 0, 0, 0.3);
+    }
+    80%,
+    to {
+      -webkit-transform: translate(-80px, -80px);
+      box-shadow: 80px 112px 40px rgba(0, 0, 0, 0.2),
+        80px 80px 40px rgba(0, 0, 0, 0.2);
+    }
+  }
+  @-moz-keyframes lift {
+    20%,
+    from {
+      -moz-transform: translate(0, 0);
+      box-shadow: -1px 2px 2px -2px rgba(0, 0, 0, 0.3);
+    }
+    80%,
+    to {
+      -moz-transform: translate(-80px, -80px);
+      box-shadow: 80px 112px 40px rgba(0, 0, 0, 0.2),
+        80px 80px 40px rgba(0, 0, 0, 0.2);
+    }
+  }
+  @keyframes lift {
+    20%,
+    from {
+      -webkit-transform: translate(0, 0);
+      -moz-transform: translate(0, 0);
+      -ms-transform: translate(0, 0);
+      -o-transform: translate(0, 0);
+      transform: translate(0, 0);
+      box-shadow: -1px 2px 2px -2px rgba(0, 0, 0, 0.3);
+    }
+    80%,
+    to {
+      -webkit-transform: translate(-80px, -80px);
+      -moz-transform: translate(-80px, -80px);
+      -ms-transform: translate(-80px, -80px);
+      -o-transform: translate(-80px, -80px);
+      transform: translate(-80px, -80px);
+      box-shadow: 80px 112px 40px rgba(0, 0, 0, 0.2),
+        80px 80px 40px rgba(0, 0, 0, 0.2);
+    }
+  }
