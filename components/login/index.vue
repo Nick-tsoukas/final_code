@@ -119,20 +119,33 @@ export default {
     },
     async login() {
       const { email, password } = this.formValues;
-      this.error = null;
-
       try {
-        console.log(email, password);
-        await this.$auth.loginWith("local", {
-          data: {
-            identifier: email,
-            password: password
-          }
+        const { user, jwt } = await this.$strapi.login({
+          identifier: email,
+          password
         });
+        // if (process.client) {
+        //   localStorage.setItem("jwt", jwt);
+        //   localStorage.setItem("user", JSON.stringify(user));
+        // }
+        // console.log(user, jwt);
         this.$router.push("/dash");
-      } catch (e) {
-        this.error = "Don't have an account? Sign up ... it's free";
+      } catch (error) {
+        this.error = "Don't have an accoun? Sign Up ... it's free";
       }
+      // this.error = null;
+      // try {
+      //   console.log(email, password);
+      //   await this.$auth.loginWith("local", {
+      //     data: {
+      //       identifier: email,
+      //       password: password
+      //     }
+      //   });
+      //   this.$router.push("/dash");
+      // } catch (e) {
+      //   this.error = "Don't have an account? Sign up ... it's free";
+      // }
     }
   }
 };
