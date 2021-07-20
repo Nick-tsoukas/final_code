@@ -1,15 +1,4 @@
-# CodeUi Test Ground for the api
-
-### Light UX
-
-- Mike cole is in a greatful dead cover band. He plays music full time and tours alot. He counts on
-  selling tickets and promoting the band. He also somethimes sells mech. Limited time only. He is interested in
-  getting qr codes because he sees them everywhere. He talks to some other bands and hears about dynamic qr code
-  and then starts looking for an app service online.
-
-## notes
-
-Type is splash page not ... anything else
+### Test Data Model
 
 user:
 userId: "111",
