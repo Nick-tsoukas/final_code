@@ -5,9 +5,7 @@
 </template>
 
 <script>
-export default {
-  middleware: "guest"
-};
+export default {};
 </script>
 
 <style lang="scss" scoped></style>

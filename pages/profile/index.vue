@@ -5,11 +5,11 @@
       <div class="content">
         <p>
           <strong>Username:</strong>
-          {{ loggedInUser.username }}
+          {{ $strapi.user.username }}
         </p>
         <p>
           <strong>Email:</strong>
-          {{ loggedInUser.email }}
+          {{ $strapi.user.email }}
         </p>
       </div>
     </div>
@@ -17,12 +17,13 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
 
 export default {
   middleware: "auth",
-  computed: {
-    ...mapGetters(["loggedInUser"])
-  }
+  layout: "dash"
+  // computed: {
+  //   ...mapGetters(["loggedInUser"])
+  // }
 };
 </script>

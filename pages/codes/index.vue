@@ -1,6 +1,6 @@
 <template>
   <div>
-    This is the all codes view
+    <pre>{{ $strapi.user.code }}</pre>
   </div>
 </template>
 

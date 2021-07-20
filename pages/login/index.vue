@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  middleware: "guest",
+  middleware: "auth",
   layout: "auth"
 };
 </script>

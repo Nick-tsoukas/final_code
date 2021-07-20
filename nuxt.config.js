@@ -25,25 +25,25 @@ export default {
    ** Auth module configuration
    ** See https://auth.nuxtjs.org/schemes/local.html#options
    */
-  auth: {
-    strategies: {
-      local: {
-        endpoints: {
-          login: {
-            url: "auth/local",
-            method: "post",
-            propertyName: "jwt"
-          },
-          user: {
-            url: "users/me",
-            method: "get",
-            propertyName: false
-          },
-          logout: false
-        }
-      }
-    }
-  },
+  // auth: {
+  //   strategies: {
+  //     local: {
+  //       endpoints: {
+  //         login: {
+  //           url: "auth/local",
+  //           method: "post",
+  //           propertyName: "jwt"
+  //         },
+  //         user: {
+  //           url: "users/me",
+  //           method: "get",
+  //           propertyName: false
+  //         },
+  //         logout: false
+  //       }
+  //     }
+  //   }
+  // },
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ["~/assets/css/main.css"],
 
@@ -72,7 +72,13 @@ export default {
   },
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ["@nuxtjs/bulma", "@nuxtjs/axios", "@nuxtjs/dotenv", "@nuxtjs/auth"],
+  modules: [
+    // "@nuxtjs/auth"
+    "@nuxtjs/bulma",
+    "@nuxtjs/axios",
+    "@nuxtjs/dotenv",
+    "@nuxtjs/strapi"
+  ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {}

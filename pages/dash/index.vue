@@ -1,12 +1,18 @@
 <template>
-  <div class="pl-28 pt-20">
-    This is the home dashboard of the app page
-  </div>
+  <div class="pl-28 pt-20"></div>
 </template>
 
 <script>
 export default {
   middleware: "auth",
-  layout: "dash"
+  layout: "dash",
+  computed: {
+    user() {
+      return this.$strapi.user;
+    },
+    codes() {
+      return this.$strapi.user.code;
+    }
+  }
 };
 </script>

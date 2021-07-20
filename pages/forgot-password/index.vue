@@ -33,13 +33,13 @@
 </template>
 
 <script>
-import Notification from "~/components/Notification";
+// import Notification from "~/components/Notification";
 
 export default {
-  middleware: "guest",
-  components: {
-    Notification
-  },
+  middleware: "auth",
+  // components: {
+  //   Notification
+  // },
   data() {
     return {
       email: "",
@@ -48,18 +48,18 @@ export default {
     };
   },
   methods: {
-    async forgotPassword() {
-      try {
-        await this.$axios.post("auth/forgot-password", {
-          email: this.email
-        });
-        this.error = null;
-        this.success = `A reset password link has been sent to your email account. \
- Please click on the link to complete the password reset.`;
-      } catch (e) {
-        this.error = e.response.data.message[0].messages[0].message;
-      }
-    }
+    //     async forgotPassword() {
+    //       try {
+    //         await this.$axios.post("auth/forgot-password", {
+    //           email: this.email
+    //         });
+    //         this.error = null;
+    //         this.success = `A reset password link has been sent to your email account. \
+    //  Please click on the link to complete the password reset.`;
+    //       } catch (e) {
+    //         this.error = e.response.data.message[0].messages[0].message;
+    //       }
+    //     }
   }
 };
 </script>
