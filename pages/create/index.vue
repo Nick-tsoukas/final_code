@@ -1,7 +1,7 @@
 <template>
   <div class="pl-28 p-20 lg:flex lg:flex-row">
     <div class="w-1/2 flex flex-col ">
-      <FormulateForm @submit="createCode" v-model="formValues">
+      <FormulateForm @submit="createCodeTwo" v-model="formValues">
         <!-- takes the metadata for the code for the code -->
         <FormulateInput
           name="title"
@@ -31,14 +31,10 @@
     </div>
     <section>
       <img class="w-1/2" :src="link" alt="" />
-      <div v-if="link !== null">
-        <button
-          @click="save"
-          class="px-6 py-2 text-custom-black bg-custom-blue"
-        >
-          Save
-        </button>
-      </div>
+
+      <button @click="save" class="px-6 py-2 text-custom-black bg-custom-blue">
+        Save
+      </button>
     </section>
   </div>
 </template>
@@ -51,7 +47,9 @@ export default {
     return {
       link: null,
       formValues: {},
-      code: []
+      code: [],
+      testing: null,
+      base: null
     };
   },
   async mounted() {
@@ -70,60 +68,25 @@ export default {
     }
   },
   methods: {
-    sendToApi: async function() {},
     save: async function() {
-      console.log(this.formValues);
       const qr = await this.$strapi.create("qrs", {
         ...this.formValues,
-        img: this.link,
+
         users_permissions_user: this.$strapi.user.id
       });
       console.log("creating: ", qr);
     },
-    logUser: async function() {
-      console.log(this.formValues);
-    },
-    createCode: async function() {
-      fetch(
-        "https://qrcode-monkey.p.rapidapi.com/qr/custom?data=https%3A%2F%2Fwww.qrcode-monkey.com&size=600&file=png&download=true&config=%7B%22bodyColor%22%3A%20%22%230277BD%22%2C%20%22body%22%3A%22mosaic%22%7D",
-        {
-          method: "GET",
-          headers: {
-            "x-rapidapi-key": process.env.API_KEY,
-            "x-rapidapi-host": "qrcode-monkey.p.rapidapi.com"
-          }
-        },
-        {
-          file: "png"
-        }
-      )
-        .then(response => {
-          const reader = response.body.getReader();
-          return new ReadableStream({
-            start(controller) {
-              return pump();
+    createCodeTwo: async function() {
+      this.$axios.setHeader("x-rapidapi-key", process.env.API_KEY);
+      this.$axios.setHeader("x-rapidapi-host", "qrcode-monkey.p.rapidapi.com");
 
-              function pump() {
-                return reader.read().then(({ done, value }) => {
-                  // When no more data needs to be consumed, close the stream
-                  if (done) {
-                    controller.close();
-                    return;
-                  }
-
-                  // Enqueue the next data chunk into our target stream
-                  controller.enqueue(value);
-                  return pump();
-                });
-              }
-            }
-          });
-        })
-        .then(stream => new Response(stream))
-        .then(response => response.blob())
-        .then(blob => URL.createObjectURL(blob))
-        .then(url => (this.link = url))
-        .catch(err => console.error(err));
+      this.$axios
+        .$get(
+          "https://qrcode-monkey.p.rapidapi.com/qr/custom?data=https%3A%2F%2Fwww.qrcode-monkey.com&size=600&file=png&download=false&config=%7B%22bodyColor%22%3A%20%22%230277BD%22%2C%20%22body%22%3A%22mosaic%22%7D"
+        )
+        .then(res => {
+          console.log(res);
+        });
     }
   }
 };

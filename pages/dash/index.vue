@@ -4,7 +4,18 @@
       Username: {{ $strapi.user.username }} {{ $strapi.user.email }}
     </h2>
     <section>
-      <pre>{{ codes }}</pre>
+      <div>
+        <ul>
+          <li v-for="code in codes" :key="code.id">
+            <div class="flex flex-row ">
+              <p>{{ code.title }}</p>
+              <p>{{ code.url }}</p>
+              <!-- <img class="h-46" :src="code.imgUrl" alt="" /> -->
+              <p>{{ code.imgUrl }}</p>
+            </div>
+          </li>
+        </ul>
+      </div>
     </section>
     <!-- <DashAllCodes class="flex-grow" :codes="codes" /> -->
     <!-- <DashTrack class="flex-grow w-1/2" :codes="codes" /> -->
