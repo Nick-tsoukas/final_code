@@ -1,6 +1,6 @@
 <template>
   <div>
-    This is where the track code component will lie
+    <Track />
   </div>
 </template>
 

@@ -1,9 +1,20 @@
 <template>
-  <div>
-    This is the tracking component
+  <div class="w-full pl-10">
+    <ul>
+      <li v-for="code in codes" :key="code">{{ code.label }}</li>
+    </ul>
   </div>
 </template>
 
-<script setup></script>
+<script>
+export default {
+  props: {
+    codes: {
+      type: Array,
+      required: true
+    }
+  }
+};
+</script>
 
 <style lang="scss" scoped></style>

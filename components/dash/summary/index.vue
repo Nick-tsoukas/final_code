@@ -1,11 +1,20 @@
 <template>
   <div>
-    This is the summary of all stats component
+    <ul>
+      <li v-for="code in codes" :key="code">{{ code.label }}</li>
+    </ul>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    codes: {
+      type: Array,
+      required: true
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped></style>

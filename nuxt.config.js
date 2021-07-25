@@ -2,7 +2,7 @@ require("dotenv").config();
 
 export default {
   // Target: https://go.nuxtjs.dev/config-target
-  target: "static",
+  ssr: true,
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -57,7 +57,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/tailwindcss
     "@nuxtjs/tailwindcss",
-
+    "@nuxtjs/moment",
     "@braid/vue-formulate/nuxt",
     "@nuxtjs/google-fonts"
   ],
@@ -77,9 +77,12 @@ export default {
     "@nuxtjs/bulma",
     "@nuxtjs/axios",
     "@nuxtjs/dotenv",
-    "@nuxtjs/strapi"
+    "@nuxtjs/strapi",
+    "@nuxtjs/axios"
   ],
-
+  strapi: {
+    entities: ["qrs"]
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {}
 };

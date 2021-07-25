@@ -4,6 +4,7 @@ export default function({ $strapi, redirect, route }) {
     return redirect("/login");
   }
   if ($strapi.user && route.fullPath == "/login") {
+    this.$strapi.setToken(token);
     return redirect("/dash");
   }
 }
