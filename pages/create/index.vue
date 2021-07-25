@@ -1,6 +1,8 @@
 <template>
   <div class="pl-28 p-20 lg:flex lg:flex-row">
     <div class="w-1/2 flex flex-col ">
+      <!-- <pre>{{ qrImageUrl }}</pre> -->
+
       <FormulateForm @submit="createCodeTwo" v-model="formValues">
         <!-- takes the metadata for the code for the code -->
         <FormulateInput
@@ -30,7 +32,12 @@
       </FormulateForm>
     </div>
     <section>
-      <img class="w-1/2" :src="link" alt="" />
+      <img
+        v-if="qrImageUrl"
+        class="object-contain h-full w-full"
+        :src="qrImageUrl"
+        alt=""
+      />
 
       <button @click="save" class="px-6 py-2 text-custom-black bg-custom-blue">
         Save
@@ -46,10 +53,11 @@ export default {
   data() {
     return {
       link: null,
-      formValues: {},
+      formValues: { title: "Hello", url: "google.com" },
       code: [],
       testing: null,
-      base: null
+      base: null,
+      qrImageUrl: null
     };
   },
   async mounted() {
@@ -68,24 +76,90 @@ export default {
     }
   },
   methods: {
-    save: async function() {
-      const qr = await this.$strapi.create("qrs", {
-        ...this.formValues,
-
-        users_permissions_user: this.$strapi.user.id
-      });
-      console.log("creating: ", qr);
+    async uploadByUrl(url) {
+      fetch(url)
+        .then(response => response.blob())
+        .then(function(myBlob) {
+          const formData = new FormData();
+          formData.append("files", myBlob);
+          console.log(formData);
+          fetch("http://localhost:1337/upload", {
+            method: "POST",
+            headers: {
+              Authorization: "Bearer " // <- Don't forget Authorization header if you are using it.
+            },
+            body: formData
+          })
+            .then(response => {
+              const result = response.json();
+              console.log("result", result);
+            })
+            .catch(function(err) {
+              console.log("error:");
+              console.log(err);
+            });
+        });
     },
-    createCodeTwo: async function() {
+    save: async function() {
+      if (process.client) {
+        const myBlob = await fetch("https:" + this.qrImageUrl, {
+          mode: "no-cors"
+        }).then(response => response.blob());
+        // blob empty
+        console.log(myBlob);
+
+        const formData = new FormData();
+        formData.append("files", myBlob);
+        // below broken
+        const qrId = await this.$strapi.create("upload", { body: formData });
+        console.log(qrId);
+        const qr = await this.$strapi.create("qrs", {
+          ...this.formValues,
+          imgUrl: this.qrImageUrl,
+          qrMediaLibraryImage: { id: 3 },
+          users_permissions_user: this.$strapi.user.id
+        });
+        // console.log("creating: ", qr);
+      }
+    },
+
+    async createCodeTwo() {
       this.$axios.setHeader("x-rapidapi-key", process.env.API_KEY);
       this.$axios.setHeader("x-rapidapi-host", "qrcode-monkey.p.rapidapi.com");
 
-      this.$axios
-        .$get(
-          "https://qrcode-monkey.p.rapidapi.com/qr/custom?data=https%3A%2F%2Fwww.qrcode-monkey.com&size=600&file=png&download=false&config=%7B%22bodyColor%22%3A%20%22%230277BD%22%2C%20%22body%22%3A%22mosaic%22%7D"
-        )
-        .then(res => {
-          console.log(res);
+      this.qrImageUrl = await this.$axios
+        .$post("https://qrcode-monkey.p.rapidapi.com/qr/transparent", {
+          data: this.formValues.url,
+          config: {
+            body: "rounded-pointed",
+            eye: "frame14",
+            eyeBall: "ball16",
+            erf1: [],
+            erf2: ["fh"],
+            erf3: ["fv"],
+            brf1: [],
+            brf2: ["fh"],
+            brf3: ["fv"],
+            bodyColor: "#5C8B29",
+            bgColor: "#FFFFFF",
+            eye1Color: "#3F6B2B",
+            eye2Color: "#3F6B2B",
+            eye3Color: "#3F6B2B",
+            eyeBall1Color: "#60A541",
+            eyeBall2Color: "#60A541",
+            eyeBall3Color: "#60A541",
+            gradientColor1: "#5C8B29",
+            gradientColor2: "#25492F",
+            gradientType: "radial",
+            gradientOnEyes: false,
+            logo: ""
+          },
+          download: true,
+          file: "png"
+        })
+        .then(response => {
+          // console.log(response);
+          return response.imageUrl;
         });
     }
   }
