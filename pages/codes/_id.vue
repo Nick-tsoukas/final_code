@@ -1,21 +1,35 @@
 <template>
   <div>
-    This is the the single code views
-    <pre>{{ user[this.$route.params.id - 1] }}</pre>
+    
+    <pre>{{ qrCodeData }}</pre>
   </div>
 </template>
 
 <script>
-// id need to get the id from the params and make this a protected route. The data needs to displya only the logged in
-// users id of the code
+
 export default {
   middleware: "auth",
   layout: "dash",
-  computed: {
-    user() {
-      return this.$strapi.user.code;
+  data: ()=>{
+    return {
+      qrCodeData: null
     }
-  }
+  },
+  mounted() {
+    this.getQrCodeData()
+  },
+  methods: {
+    async getQrCodeData() {
+      this.qrCodeData = await this.$strapi
+        .find("qrs", {
+          id: this.$route.params.id,
+          users_permissions_user: this.$strapi.user.id,
+        })
+        .catch((err) => {
+          console.err(err);
+        });
+    },
+  },
 };
 </script>
 
